@@ -3,7 +3,7 @@ interface HTMLInputEvent extends Event {
 }
 
 const url = {
-    ocr: '//api.geeku.net/ocr'
+    ocr: 'https://api.geeku.net/ocr'
 }
 const paraments = {
     image: '',

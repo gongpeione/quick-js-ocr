@@ -70,7 +70,7 @@ function __generator(thisArg, body) {
 }
 
 var url = {
-    ocr: '//api.geeku.net/ocr'
+    ocr: 'https://api.geeku.net/ocr'
 };
 var paraments = {
     image: '',
@@ -231,6 +231,9 @@ var JsOCR = /** @class */ (function () {
 }());
 
 var body = document.querySelector('body');
+var setting = document.querySelector('.setting');
+var tokenEl = document.querySelector('.token');
+var tokenBtn = document.querySelector('.token + button');
 var loading = document.querySelector('#loading');
 var content = document.querySelector('.content');
 var img = content.querySelector('img');
@@ -240,9 +243,26 @@ close.addEventListener('click', function (e) {
     e.stopPropagation();
     content.classList.remove('show');
 });
+setting.addEventListener('click', function (e) {
+    e.stopPropagation();
+});
+tokenBtn.addEventListener('click', function (e) {
+    var tokenVal = tokenEl.value;
+    if (!tokenEl) {
+        alert('Token cannot be empty.');
+        return;
+    }
+    localStorage.setItem('token', tokenVal);
+    alert('Token saved.');
+});
+var token = localStorage.getItem('token');
+if (token) {
+    tokenEl.value = token;
+}
 var input = document.querySelector('.inputField');
 input.addEventListener('change', function (e) {
     upload(e.target.files[0]);
+    input.value = '';
 });
 document.addEventListener('click', function (e) {
     if (content.classList.contains('show')) {
@@ -275,7 +295,14 @@ document.addEventListener('drop', function (e) {
     body.classList.remove('dragover');
 });
 function upload(file) {
-    var ocr = new JsOCR(file);
+    var ocr = null;
+    try {
+        ocr = new JsOCR(file);
+    }
+    catch (e) {
+        alert(e);
+        return;
+    }
     loading.classList.add('show');
     ocr.on('data', function (data) {
         img.src = typeof file === 'string' ? file : ocr.img.src;

@@ -8,6 +8,13 @@ html {
 *, *::before, *::after {
     box-sizing: border-box;
 }
+input {
+    color: $main-color;
+}
+input::-webkit-input-placeholder {
+    font-weight: 300;
+    color: #ccc;
+}
 body {
     height: 100%;
     padding: 0;
@@ -17,7 +24,7 @@ body {
         color: #aaa;
     }
     &::before {
-        content: 'Paste or click or Drag image or image url';
+        content: 'Paste/Click/Drag image or url';
         color: $gray;
         font-weight: 900;
         font-size: 3vw;
@@ -118,6 +125,42 @@ main {
         }
         img {
             display: block;
+        }
+    }
+}
+.setting {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: $gray;
+    width: 100%;
+    padding: 10px 20px;
+    color: $dark;
+    font-weight: 300;
+    display: flex;
+    justify-content: flex-end;
+    .cover {
+        display: flex;
+        align-items: stretch;
+    }
+    input {
+        border: none;
+        padding: 10px 10px;
+        font-size: 12px;
+        &:focus {
+            outline: 1px dashed $main-color;
+        }
+    }
+    button {
+        border: 0;
+        background: #aaa;
+        color: #fff;
+        border-radius: 0;
+        font-size: 16px;
+        padding: 0 10px;
+        outline: none;
+        &:hover {
+            background-color: $main-color;
         }
     }
 }

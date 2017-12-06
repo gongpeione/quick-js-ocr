@@ -70,7 +70,7 @@ function __generator(thisArg, body) {
 }
 
 var url = {
-    ocr: '//api.geeku.net/ocr'
+    ocr: 'https://api.geeku.net/ocr'
 };
 var paraments = {
     image: '',

@@ -4,6 +4,9 @@ import { toType, urlRegex } from '../src/jsocr';
 import './style.scss';
 
 const body = document.querySelector('body');
+const setting = document.querySelector('.setting');
+const tokenEl: HTMLInputElement = document.querySelector('.token');
+const tokenBtn = document.querySelector('.token + button');
 const loading = document.querySelector('#loading');
 const content = document.querySelector('.content');
 const img = content.querySelector('img');
@@ -13,10 +16,28 @@ close.addEventListener('click', e => {
     e.stopPropagation();
     content.classList.remove('show');
 });
+setting.addEventListener('click', e => {
+    e.stopPropagation();
+});
+tokenBtn.addEventListener('click', e => {
+    const tokenVal = tokenEl.value;
+    if (!tokenEl) {
+        alert('Token cannot be empty.');
+        return;
+    }
+    localStorage.setItem('token', tokenVal);
+    alert('Token saved.');
+});
+
+const token = localStorage.getItem('token');
+if (token) {
+    tokenEl.value = token;
+}
 
 const input: HTMLInputElement = document.querySelector('.inputField');
 input.addEventListener('change', e => {
     upload((e.target as any).files[0]);
+    input.value = '';
 });
 
 document.addEventListener('click', (e) => {
@@ -51,7 +72,13 @@ document.addEventListener('drop', e => {
 
 
 function upload (file: File | string) {
-    const ocr = new JsOCR(file);
+    let ocr = null;
+    try {
+        ocr = new JsOCR(file);
+    } catch (e) {
+        alert(e);
+        return;
+    }
     loading.classList.add('show');
     ocr.on('data', (data) => {
         img.src = typeof file === 'string' ? file : ocr.img.src;
