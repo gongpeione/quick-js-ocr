@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.JsOCR = factory());
-}(this, (function () { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.JsOCR = {})));
+}(this, (function (exports) { 'use strict';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -81,8 +81,12 @@ var paraments = {
     probability: true
 };
 var bytesLimit = 4 * 1024 * 1024;
+function toType(obj) {
+    return Object.prototype.toString.call(obj).match(/\[\w+\s(\w+)\]/)[1].toLowerCase();
+}
+var urlRegex = /https?:\/\/.*?/;
 var JsOCR = /** @class */ (function () {
-    function JsOCR(contentType) {
+    function JsOCR(content) {
         this._file = null;
         this._url = '';
         this.imgReader = new FileReader();
@@ -91,7 +95,10 @@ var JsOCR = /** @class */ (function () {
         this.token = '';
         this.eventListeners = {};
         if (!(this instanceof JsOCR)) {
-            throw new Error('this is not a JsOCR instance.');
+            throw new Error('This is not a JsOCR instance.');
+        }
+        if (!/image\/(png)|(jpg)|(jpeg)|(bmp)/i.test(content.type)) {
+            throw new Error("Image format(" + content.type + ") is not supported. Image format must be PNG, JPG or BMP.");
         }
         this.config = Object.assign(paraments);
         // Generate your own token: https://cloud.baidu.com/product/ocr.html
@@ -99,18 +106,20 @@ var JsOCR = /** @class */ (function () {
         this.token = tokenFromLocal ?
             tokenFromLocal :
             '24.2f0d9a3b6a60817dfd94ae61ea6f7e99.2592000.1515124116.282335-10488404';
-        var type = Object.prototype.toString.call(contentType).match(/\[\w+\s(\w+)\]/)[1].toLowerCase();
+        var type = toType(content);
         switch (type) {
             case 'file':
-                this.file = contentType;
+                this.file = content;
                 break;
             case 'event':
-                this.file = contentType.target.files[0];
+                this.file = content.target.files[0];
                 break;
             case 'htmlinputelement':
-                this.addChangeEvent(contentType);
+                this.addChangeEvent(content);
                 break;
-            case 'string': this.url = contentType;
+            case 'string':
+                this.url = content;
+                break;
             default: throw Error('Parament type is illegal.');
         }
     }
@@ -122,6 +131,7 @@ var JsOCR = /** @class */ (function () {
             if (newVal.size >= bytesLimit) {
                 throw new Error('Image is oversize.');
             }
+            console.dir(this.file);
             this._file = newVal;
             this.run();
         },
@@ -133,7 +143,7 @@ var JsOCR = /** @class */ (function () {
             return this._url;
         },
         set: function (newVal) {
-            if (!/https?:\/\/.*?/.test(newVal)) {
+            if (!urlRegex.test(newVal)) {
                 throw new Error('Url format illegal.');
             }
             this._url = newVal;
@@ -179,7 +189,8 @@ var JsOCR = /** @class */ (function () {
                             }
                             else {
                                 console.log(data.words_result);
-                                _this.eventListeners['data'].forEach(function (cb) { return cb.call(null, data.words_result); });
+                                _this.eventListeners['data'] &&
+                                    _this.eventListeners['data'].forEach(function (cb) { return cb.call(null, data.words_result); });
                             }
                         });
                         return [2 /*return*/];
@@ -216,6 +227,10 @@ var JsOCR = /** @class */ (function () {
     return JsOCR;
 }());
 
-return JsOCR;
+exports.toType = toType;
+exports.urlRegex = urlRegex;
+exports['default'] = JsOCR;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

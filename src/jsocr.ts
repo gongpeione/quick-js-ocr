@@ -15,6 +15,11 @@ const paraments = {
 }
 const bytesLimit = 4 * 1024 * 1024;
 
+export function toType (obj): string {
+    return Object.prototype.toString.call(obj).match(/\[\w+\s(\w+)\]/)[1].toLowerCase();
+}
+export const urlRegex = /https?:\/\/.*?/;
+
 export default class JsOCR {
     _file: File = null
     _url: string = ''
@@ -25,6 +30,7 @@ export default class JsOCR {
         if (newVal.size >= bytesLimit) {
             throw new Error('Image is oversize.');
         }
+        console.dir(this.file);
         this._file = newVal;
         this.run();
     }
@@ -32,7 +38,7 @@ export default class JsOCR {
         return this._url;
     }
     set url (newVal) {
-        if (!/https?:\/\/.*?/.test(newVal)) {
+        if (!urlRegex.test(newVal)) {
             throw new Error('Url format illegal.');
         }
         this._url = newVal;
@@ -43,10 +49,13 @@ export default class JsOCR {
     config = null
     token = ''
     eventListeners = {}
-    constructor (contentType: HTMLInputElement | HTMLInputEvent | File | string) {
+    constructor (content: HTMLInputElement | HTMLInputEvent | File | string) {
 
         if (!((this as any) instanceof JsOCR)) {
-            throw new Error('this is not a JsOCR instance.');
+            throw new Error('This is not a JsOCR instance.');
+        }
+        if (!/image\/(png)|(jpg)|(jpeg)|(bmp)/i.test((content as File).type)) {
+            throw new Error(`Image format(${(content as File).type}) is not supported. Image format must be PNG, JPG or BMP.`);
         }
 
         this.config = Object.assign(paraments);
@@ -55,13 +64,13 @@ export default class JsOCR {
         this.token = tokenFromLocal ? 
                         tokenFromLocal : 
                         '24.2f0d9a3b6a60817dfd94ae61ea6f7e99.2592000.1515124116.282335-10488404';
-        const type = Object.prototype.toString.call(contentType).match(/\[\w+\s(\w+)\]/)[1].toLowerCase();
+        const type = toType(content);
         
         switch (type) {
-            case 'file': this.file = contentType as File; break;
-            case 'event': this.file = (contentType as HTMLInputEvent).target.files[0] as File; break;
-            case 'htmlinputelement': this.addChangeEvent(contentType as HTMLInputElement); break;
-            case 'string': this.url = contentType as string;
+            case 'file': this.file = content as File; break;
+            case 'event': this.file = (content as HTMLInputEvent).target.files[0] as File; break;
+            case 'htmlinputelement': this.addChangeEvent(content as HTMLInputElement); break;
+            case 'string': this.url = content as string; break;
             default: throw Error('Parament type is illegal.');
         }
     }
@@ -90,6 +99,7 @@ export default class JsOCR {
                     throw new Error(`ERROR: ${data.error_code}: ${data.error_msg}`)
                 } else {
                     console.log(data.words_result);
+                    this.eventListeners['data'] && 
                     this.eventListeners['data'].forEach(cb => cb.call(null, data.words_result));
                 }
             });

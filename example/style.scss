@@ -13,6 +13,9 @@ body {
     padding: 0;
     margin: 0;
     overflow: hidden;
+    &.dragover::before  {
+        color: #aaa;
+    }
     &::before {
         content: 'Paste or click or Drag image or image url';
         color: $gray;
