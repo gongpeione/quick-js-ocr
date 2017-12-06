@@ -50,7 +50,7 @@ export default class JsOCR {
         }
 
         this.config = Object.assign(paraments);
-        // you can generate your own token: https://cloud.baidu.com/product/ocr.html
+        // Generate your own token: https://cloud.baidu.com/product/ocr.html
         const tokenFromLocal = localStorage.getItem('token');
         this.token = tokenFromLocal ? 
                         tokenFromLocal : 
@@ -73,7 +73,8 @@ export default class JsOCR {
             this.config.image = base64.replace(/data:image\/\w+;base64,/, '');
             this.config.url = undefined;
         } else if (type === 'url') {
-
+            this.config.image = undefined;
+            this.config.url = this.url;
         }
         console.log(this.config);
         const body = Object.keys(this.config)

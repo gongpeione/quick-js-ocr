@@ -1,0 +1,156 @@
+$main-color: #0259b3;
+$gray: #eee;
+$dark: #1d2e38;
+
+html {
+    height: 100%;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    &::before {
+        content: 'Paste or click or Drag image or image url';
+        color: $gray;
+        font-weight: 900;
+        font-size: 3vw;
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+        transform: translateY(-50%);
+    }
+}
+main {
+    height: 100%;
+}
+.inputField {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.content {
+    // display: none;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 2;
+    align-items: stretch;
+    section {
+        flex: 1;
+    }
+    .img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $dark;
+        transform-origin: bottom right;
+    }
+    .text {
+        transform-origin: bottom left;
+    }
+    .img,
+    .text {
+        transform: scale(0);
+        transition: .2s transform ease-in-out;
+        width: 50%;
+    }
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    textarea {
+        width: 100%;
+        height: 100%;
+        border: none;
+        max-width: 100%;
+        max-height: 100%;
+        padding: 25px;
+        outline: none;
+        font-size: 18px;
+        color: $dark;
+        line-height: 1.5;
+        font-weight: 300;
+        border-left: 1px solid #eee;
+    }
+    .close {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%) translateY(100%);
+        background: $main-color;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        border-radius: 50% 50% 0 0;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        transition: .2s transform ease-in-out;
+        transition-delay: .2s;
+        border: 5px solid #fff;
+        border-bottom: 0;
+        &:hover {
+            box-shadow: 0 0 0 3px $main-color;
+        }
+    }
+
+    &.show {
+        pointer-events: auto;
+        .img,
+        .text {
+            transform: scale(1);
+        }
+        .close {
+            transform: translateX(-50%) translateY(0);
+        }
+        img {
+            display: block;
+        }
+    }
+}
+
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: $main-color;
+    animation: 1s loading ease-in-out infinite;
+    display: none;
+}
+#loading.show {
+    display: block;
+}
+@keyframes loading {
+    0% {
+        opacity: 0;
+        transform-origin: left;
+        transform: scaleX(0);
+    }
+    40% {
+        opacity: 1;
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+    60% {
+        opacity: 1;
+        transform-origin: right;
+        transform: scaleX(1);
+    }
+    100% {
+        opacity: 0;
+        transform-origin: right;
+        transform: scaleX(0);
+    }
+}

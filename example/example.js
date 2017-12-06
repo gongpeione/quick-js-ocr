@@ -1,7 +1,7 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
-	(global.JsOCR = factory());
+	(factory());
 }(this, (function () { 'use strict';
 
 /*! *****************************************************************************
@@ -216,6 +216,30 @@ var JsOCR = /** @class */ (function () {
     return JsOCR;
 }());
 
-return JsOCR;
+var loading = document.querySelector('#loading');
+var content = document.querySelector('.content');
+var img = content.querySelector('img');
+var textArea = content.querySelector('textarea');
+var close = content.querySelector('.close');
+close.addEventListener('click', function (e) {
+    content.classList.remove('show');
+});
+var input = document.querySelector('.inputField');
+input.addEventListener('change', function (e) {
+    var ocr = new JsOCR(e);
+    loading.classList.add('show');
+    ocr.on('data', function (data) {
+        img.src = ocr.img.src;
+        textArea.value = data.map(function (val) { return val.words; }).join('\n');
+        content.classList.add('show');
+        loading.classList.remove('show');
+    });
+});
+// document.addEventListener('click', (e) => {
+//     if (content.classList.contains('show')) {
+//         return;
+//     }
+//     input.click();
+// });
 
 })));

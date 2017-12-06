@@ -13,21 +13,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
     <meta name="theme-color" content="#363d4c">
+    <link rel="stylesheet" href="./example.css">
 
 </head>
 <body>
 
-    <input type="file" accept="image/*">
+    <main>
+        <input type="file" accept="image/*" class="inputField">
+        <div class="content">
+            <section class="img">
+                <img src="" alt="">
+            </section>
+            <section class="text">
+                <textarea></textarea>
+            </section>
+            <div class="close">✖</div>
+        </div>
+    </main>
+    <div id="loading"></div>
 
-    <script src="../jsocr.js"></script>
-    <script>
-        const file = document.querySelector('input[type=file]');
-        file.addEventListener('change', (e) => {
-            // console.log(e.target.files[0]);
-            const o = new JsOCR(e.target.files[0]);
-            o.on('data', (data) => console.log('data: ' + JSON.stringify(data)));
-        });
-    </script>
+    <script src="./example.js"></script>
         
 </body>
 </html>
