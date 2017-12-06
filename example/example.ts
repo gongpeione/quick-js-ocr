@@ -46,6 +46,13 @@ document.addEventListener('click', (e) => {
     }
     input.click();
 });
+document.addEventListener('touchstart', (e) => {
+    if (content.classList.contains('show')) {
+        return;
+    }
+    e.preventDefault();
+    input.click();
+});
 document.addEventListener('paste', (e: ClipboardEvent) => {
     const url = e.clipboardData.getData('text');
     if (toType(e.clipboardData.files[0]) === 'file') {

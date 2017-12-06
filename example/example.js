@@ -269,6 +269,12 @@ document.addEventListener('click', function (e) {
     }
     input.click();
 });
+document.addEventListener('touchstart', function (e) {
+    if (content.classList.contains('show')) {
+        return;
+    }
+    input.click();
+});
 document.addEventListener('paste', function (e) {
     var url = e.clipboardData.getData('text');
     if (toType(e.clipboardData.files[0]) === 'file') {
