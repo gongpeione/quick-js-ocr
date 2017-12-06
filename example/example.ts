@@ -45,9 +45,9 @@ input.addEventListener('change', e => {
 //         return;
 //     }
 // });
-body.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-});
+// body.addEventListener('touchstart', (e) => {
+//     e.preventDefault();
+// });
 document.addEventListener('paste', (e: ClipboardEvent) => {
     const url = e.clipboardData.getData('text');
     if (toType(e.clipboardData.files[0]) === 'file') {

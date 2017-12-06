@@ -268,9 +268,9 @@ input.addEventListener('change', function (e) {
 //         return;
 //     }
 // });
-body.addEventListener('touchstart', function (e) {
-    e.preventDefault();
-});
+// body.addEventListener('touchstart', (e) => {
+//     e.preventDefault();
+// });
 document.addEventListener('paste', function (e) {
     var url = e.clipboardData.getData('text');
     if (toType(e.clipboardData.files[0]) === 'file') {
