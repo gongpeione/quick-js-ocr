@@ -98,9 +98,12 @@ export default class JsOCR {
                 if (data.error_code) {
                     throw new Error(`ERROR: ${data.error_code}: ${data.error_msg}`)
                 } else {
-                    console.log(data.words_result);
                     this.eventListeners['data'] && 
                     this.eventListeners['data'].forEach(cb => cb.call(null, data.words_result));
+                    localStorage && localStorage.setItem('jsocrHistory', JSON.stringify({
+                        img: this.config.url ? this.config.url : this.config.image,
+                        data
+                    }));
                 }
             });
     }

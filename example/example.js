@@ -188,9 +188,12 @@ var JsOCR = /** @class */ (function () {
                                 throw new Error("ERROR: " + data.error_code + ": " + data.error_msg);
                             }
                             else {
-                                console.log(data.words_result);
                                 _this.eventListeners['data'] &&
                                     _this.eventListeners['data'].forEach(function (cb) { return cb.call(null, data.words_result); });
+                                localStorage && localStorage.setItem('jsocrHistory', JSON.stringify({
+                                    img: _this.config.url ? _this.config.url : _this.config.image,
+                                    data: data
+                                }));
                             }
                         });
                         return [2 /*return*/];
