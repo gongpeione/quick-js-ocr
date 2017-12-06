@@ -1,0 +1,12 @@
+{
+  "name": "quick-js-ocr",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:gongpeione/quick-js-ocr.git",
+  "author": "Geeku <ggongpei@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "rollup-plugin-typescript2": "^0.8.4",
+    "typescript": "^2.6.2"
+  }
+}
