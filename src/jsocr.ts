@@ -2,8 +2,6 @@ interface HTMLInputEvent extends Event {
     target: HTMLInputElement & EventTarget;
 }
 
-// you can generate your own token: https://cloud.baidu.com/product/ocr.html
-
 const url = {
     ocr: 'http://api.geeku.net/ocr'
 }
@@ -46,15 +44,19 @@ export default class JsOCR {
     token = ''
     eventListeners = {}
     constructor (contentType: HTMLInputElement | HTMLInputEvent | File | string) {
+
         if (!((this as any) instanceof JsOCR)) {
             throw new Error('this is not a JsOCR instance.');
         }
+
         this.config = Object.assign(paraments);
+        // you can generate your own token: https://cloud.baidu.com/product/ocr.html
         const tokenFromLocal = localStorage.getItem('token');
         this.token = tokenFromLocal ? 
                         tokenFromLocal : 
                         '24.2f0d9a3b6a60817dfd94ae61ea6f7e99.2592000.1515124116.282335-10488404';
         const type = Object.prototype.toString.call(contentType).match(/\[\w+\s(\w+)\]/)[1].toLowerCase();
+        
         switch (type) {
             case 'file': this.file = contentType as File; break;
             case 'event': this.file = (contentType as HTMLInputEvent).target.files[0] as File; break;

@@ -1,10 +1,10 @@
 import typescript from 'rollup-plugin-typescript2';
 
 export default {
-	input: './jsocr.ts',
+	input: './src/jsocr.ts',
 	output: {
 		name: 'JsOCR',
-		file: './jsocr.js',
+		file: './dist/jsocr.js',
 		format: 'umd'
 	},
 	plugins: [

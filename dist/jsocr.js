@@ -69,7 +69,6 @@ function __generator(thisArg, body) {
     }
 }
 
-// you can generate your own token: https://cloud.baidu.com/product/ocr.html
 var url = {
     ocr: 'http://api.geeku.net/ocr'
 };
@@ -95,6 +94,7 @@ var JsOCR = /** @class */ (function () {
             throw new Error('this is not a JsOCR instance.');
         }
         this.config = Object.assign(paraments);
+        // you can generate your own token: https://cloud.baidu.com/product/ocr.html
         var tokenFromLocal = localStorage.getItem('token');
         this.token = tokenFromLocal ?
             tokenFromLocal :
