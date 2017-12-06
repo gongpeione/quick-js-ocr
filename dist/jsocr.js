@@ -221,7 +221,6 @@ var JsOCR = /** @class */ (function () {
         return new Promise(function (r, j) {
             _this.imgReader.onload = function (e) {
                 _this.img.src = e.target.result;
-                document.querySelector('body').appendChild(_this.img);
                 r(e.target.result);
             };
             _this.imgReader.readAsDataURL(img);

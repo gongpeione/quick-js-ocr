@@ -95,7 +95,7 @@ main {
         position: absolute;
         left: 50%;
         bottom: 0;
-        transform: translateX(-50%) translateY(100%);
+        transform: translateX(-50%) translateY(110%);
         background: $main-color;
         color: #fff;
         width: 40px;
@@ -126,6 +126,16 @@ main {
         img {
             display: block;
         }
+    }
+}
+@media screen and (max-width: 414px) {
+    body {
+        &::before {
+            font-size: 20px;
+        }
+    }
+    .content .img {
+        display: none;
     }
 }
 .setting {

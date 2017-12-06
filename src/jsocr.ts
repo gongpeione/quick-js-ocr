@@ -127,7 +127,6 @@ export default class JsOCR {
         return new Promise((r, j) => {
             this.imgReader.onload = e => {
                 this.img.src = (e.target as any).result;
-                document.querySelector('body').appendChild(this.img);
                 r((e.target as any).result);
             }
             this.imgReader.readAsDataURL(img);
