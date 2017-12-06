@@ -263,17 +263,13 @@ input.addEventListener('change', function (e) {
     upload(e.target.files[0]);
     input.value = '';
 });
-document.addEventListener('click', function (e) {
-    if (content.classList.contains('show')) {
-        return;
-    }
-    input.click();
-});
-document.addEventListener('touchstart', function (e) {
-    if (content.classList.contains('show')) {
-        return;
-    }
-    input.click();
+// document.addEventListener('click', (e) => {
+//     if (content.classList.contains('show')) {
+//         return;
+//     }
+// });
+body.addEventListener('touchstart', function (e) {
+    e.preventDefault();
 });
 document.addEventListener('paste', function (e) {
     var url = e.clipboardData.getData('text');

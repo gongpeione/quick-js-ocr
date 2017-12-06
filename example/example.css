@@ -1,5 +1,6 @@
 html {
-  height: 100%; }
+  height: 100%;
+  overflow: hidden; }
 
 *, *::before, *::after {
   box-sizing: border-box; }
