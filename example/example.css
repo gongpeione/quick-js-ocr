@@ -11,7 +11,7 @@ input {
 
 input::-webkit-input-placeholder {
   font-weight: 300;
-  color: #ccc; }
+  color: #0259b3; }
 
 body {
   height: 100%;
@@ -130,7 +130,9 @@ main {
     content: 'Click Here';
     font-size: 30px; }
   .content .img {
-    display: none; } }
+    display: none; }
+  .content textarea {
+    background: #fff; } }
 
 .setting {
   background: rgba(0, 0, 0, 0.2);

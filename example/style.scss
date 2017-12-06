@@ -15,7 +15,7 @@ input {
 }
 input::-webkit-input-placeholder {
     font-weight: 300;
-    color: #ccc;
+    color: $main-color;
 }
 body {
     height: 100%;
@@ -152,8 +152,13 @@ main {
             font-size: 30px;
         }
     }
-    .content .img {
-        display: none;
+    .content {
+        .img {
+            display: none;
+        }
+        textarea {
+            background: #fff;
+        }
     }
 }
 .setting {
