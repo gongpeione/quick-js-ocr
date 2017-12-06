@@ -156,7 +156,7 @@ var JsOCR = /** @class */ (function () {
         if (type === void 0) { type = 'img'; }
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var base64, body, headers;
+            var base64, body, headers, req;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -181,7 +181,7 @@ var JsOCR = /** @class */ (function () {
                             .map(function (key) { return key + "=" + encodeURIComponent(_this.config[key]); }).join('&');
                         headers = new Headers();
                         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-                        fetch(url.ocr + ("?access_token=" + this.token), { method: 'POST', headers: headers, body: body })
+                        req = fetch(url.ocr + ("?access_token=" + this.token), { method: 'POST', headers: headers, body: body })
                             .then(function (res) { return res.json(); })
                             .then(function (data) {
                             if (data.error_code) {
@@ -263,14 +263,6 @@ input.addEventListener('change', function (e) {
     upload(e.target.files[0]);
     input.value = '';
 });
-// document.addEventListener('click', (e) => {
-//     if (content.classList.contains('show')) {
-//         return;
-//     }
-// });
-// body.addEventListener('touchstart', (e) => {
-//     e.preventDefault();
-// });
 document.addEventListener('paste', function (e) {
     var url = e.clipboardData.getData('text');
     if (toType(e.clipboardData.files[0]) === 'file') {

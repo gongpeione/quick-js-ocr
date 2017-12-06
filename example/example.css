@@ -6,7 +6,8 @@ html {
   box-sizing: border-box; }
 
 input {
-  color: #0259b3; }
+  color: #0259b3;
+  -webkit-appearance: none; }
 
 input::-webkit-input-placeholder {
   font-weight: 300;
@@ -16,12 +17,13 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  overflow: hidden; }
+  overflow: hidden;
+  background-color: #0259b3; }
   body.dragover::before {
-    color: #aaa; }
+    color: rgba(255, 255, 255, 0.5); }
   body::before {
     content: 'Paste/Click/Drag image or url';
-    color: #eee;
+    color: rgba(255, 255, 255, 0.2);
     font-weight: 900;
     font-size: 3vw;
     position: absolute;
@@ -31,11 +33,14 @@ body {
     transform: translateY(-50%); }
 
 main {
-  height: 100%; }
+  height: 100%;
+  display: flex;
+  flex-direction: column; }
 
 .inputField {
   width: 100%;
   height: 100%;
+  flex: 1;
   opacity: 0; }
 
 .content {
@@ -57,15 +62,21 @@ main {
     background-color: #1d2e38;
     transform-origin: bottom right; }
   .content .text {
-    transform-origin: bottom left; }
+    transform-origin: bottom left;
+    height: 100%;
+    background-color: #fff;
+    font-size: 15px;
+    line-height: 2; }
   .content .img,
   .content .text {
     transform: scale(0);
-    transition: .2s transform ease-in-out;
+    transition: .3s transform ease-in-out;
     width: 50%; }
   .content img {
     max-width: 100%;
-    max-height: 100%; }
+    max-height: 100%;
+    transform: scale(0.95);
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5); }
   .content textarea {
     width: 100%;
     height: 100%;
@@ -74,11 +85,16 @@ main {
     max-height: 100%;
     padding: 25px;
     outline: none;
-    font-size: 18px;
+    font-size: inherit;
     color: #1d2e38;
-    line-height: 1.5;
+    line-height: inherit;
     font-weight: 300;
-    border-left: 1px solid #eee; }
+    background: linear-gradient(#eee 50%, transparent 0) top;
+    background-size: auto 4em;
+    background-attachment: local;
+    background-origin: content-box;
+    border-left: 1px solid #eee;
+    -webkit-overflow-scrolling: touch; }
   .content .close {
     position: absolute;
     left: 50%;
@@ -94,11 +110,11 @@ main {
     line-height: 30px;
     cursor: pointer;
     transition: .2s transform ease-in-out;
-    transition-delay: .2s;
+    transition-delay: .5s;
     border: 5px solid #fff;
     border-bottom: 0; }
     .content .close:hover {
-      box-shadow: 0 0 0 3px #0259b3; }
+      background-color: #1f8cfc; }
   .content.show {
     pointer-events: auto; }
     .content.show .img,
@@ -111,18 +127,16 @@ main {
 
 @media screen and (max-width: 414px) {
   body::before {
-    font-size: 20px; }
+    content: 'Click Here';
+    font-size: 30px; }
   .content .img {
     display: none; } }
 
 .setting {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  background: #eee;
+  background: rgba(0, 0, 0, 0.2);
   width: 100%;
   padding: 10px 20px;
-  color: #1d2e38;
+  color: #eee;
   font-weight: 300;
   display: flex;
   justify-content: flex-end; }
@@ -132,27 +146,31 @@ main {
   .setting input {
     border: none;
     padding: 10px 10px;
-    font-size: 12px; }
-    .setting input:focus {
-      outline: 1px dashed #0259b3; }
+    font-size: 12px;
+    background-color: rgba(0, 0, 0, 0.2);
+    outline: none;
+    color: #1f8cfc;
+    border-radius: 5px 0 0 5px; }
   .setting button {
     border: 0;
-    background: #aaa;
-    color: #fff;
-    border-radius: 0;
+    background: #1f8cfc;
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: 0 5px 5px 0;
     font-size: 16px;
     padding: 0 10px;
-    outline: none; }
+    outline: none;
+    font-weight: 300; }
     .setting button:hover {
-      background-color: #0259b3; }
+      background-color: #0372e5;
+      color: rgba(255, 255, 255, 0.5); }
 
 #loading {
   position: fixed;
   top: 0;
   left: 0;
-  height: 2px;
+  height: .5vh;
   width: 100%;
-  background: #0259b3;
+  background: #ffad31;
   animation: 1s loading ease-in-out infinite;
   display: none; }
 

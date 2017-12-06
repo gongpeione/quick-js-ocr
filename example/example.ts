@@ -40,14 +40,6 @@ input.addEventListener('change', e => {
     input.value = '';
 });
 
-// document.addEventListener('click', (e) => {
-//     if (content.classList.contains('show')) {
-//         return;
-//     }
-// });
-// body.addEventListener('touchstart', (e) => {
-//     e.preventDefault();
-// });
 document.addEventListener('paste', (e: ClipboardEvent) => {
     const url = e.clipboardData.getData('text');
     if (toType(e.clipboardData.files[0]) === 'file') {

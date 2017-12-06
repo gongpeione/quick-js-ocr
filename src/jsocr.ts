@@ -92,20 +92,30 @@ export default class JsOCR {
         // console.log(body);
         const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        fetch(url.ocr + `?access_token=${this.token}`, { method: 'POST', headers, body })
-            .then(res => res.json())
-            .then(data => {
-                if (data.error_code) {
-                    throw new Error(`ERROR: ${data.error_code}: ${data.error_msg}`)
-                } else {
-                    this.eventListeners['data'] && 
-                    this.eventListeners['data'].forEach(cb => cb.call(null, data.words_result));
-                    localStorage && localStorage.setItem('jsocrHistory', JSON.stringify({
-                        img: this.config.url ? this.config.url : this.config.image,
-                        data
-                    }));
-                }
-            });
+
+        // let timeoutFlag = false;
+        // const timer = t => {
+        //     return new Promise(resolve => setTimeout(resolve, t))
+        //         .then(res => {
+        //             throw new Error('Time out.');
+        //             this._file = true;
+        //         });
+        // }
+        const req = fetch(url.ocr + `?access_token=${this.token}`, { method: 'POST', headers, body })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error_code) {
+                        throw new Error(`ERROR: ${data.error_code}: ${data.error_msg}`)
+                    } else {
+                        this.eventListeners['data'] && 
+                        this.eventListeners['data'].forEach(cb => cb.call(null, data.words_result));
+                        localStorage && localStorage.setItem('jsocrHistory', JSON.stringify({
+                            img: this.config.url ? this.config.url : this.config.image,
+                            data
+                        }));
+                    }
+                });
+        // Promise.race([req, timer(1000)]);
     }
 
     on (eventName: string, cb: Function) {
