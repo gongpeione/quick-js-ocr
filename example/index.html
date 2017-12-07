@@ -19,29 +19,37 @@
 <body>
 
     <main>
-        <input type="file" accept="image/*" class="inputField">
+        <input type="file" accept="image/*" class="inputField" ref="inputField" @change="clickUpload">
+        
         <div class="content" :class="{'show': showContent}">
             <section class="img">
-                <img src="" alt="">
+                <img :src="imgSrc" alt="">
             </section>
             <section class="text">
-                <textarea></textarea>
+                <div class="control">
+                    <button class="copy" v-if="flags.enableCopy" data-clipboard-target="#copy-target">
+                        <img src="img/copy.svg" alt="copy" title="Copy">
+                    </button>
+                </div>
+                <textarea id="copy-target">{{ content }}</textarea>
             </section>
             <div class="close" @click.stop="clickClose">×</div>
         </div>
 
         <input type="checkbox" id="setting-switch">
-        <label for="setting-switch" class="setting-switch"><img src="setting.svg" alt="Setting"></label>
+        <label for="setting-switch" class="setting-switch"><img src="img/setting.svg" alt="Setting"></label>
         <section class="setting-cover">
             <div class="setting">
                 <section class="cover">
                     <label for="token">Token</label>
                     <input type="text" id="token" class="token" :value="token" placeholder="Your Token">
                     <button @click="saveToken">Save</button>
-                    <button>
-                        <a href="http://ai.baidu.com/docs#/Auth/top" target="_blank">Get-one</a>
-                    </button>
+                    <a href="http://ai.baidu.com/docs#/Auth/top" target="_blank" class="btn">Get-one</a>
                 </section>
+                <!-- <section class="cover">
+                        <label for="">Flags</label>
+                        
+                </section> -->
             </div>
         </section>
 

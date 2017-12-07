@@ -1,6 +1,7 @@
 html {
   height: 100%;
-  overflow: hidden; }
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", Arial, sans-serif; }
 
 *, *::before, *::after {
   box-sizing: border-box; }
@@ -12,6 +13,30 @@ input {
 input::-webkit-input-placeholder {
   font-weight: 300;
   color: #0259b3; }
+
+button,
+a.btn,
+input[type=button] {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", Arial, sans-serif;
+  border: 0;
+  background: #1f8cfc;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  padding: 0 10px;
+  outline: none;
+  font-weight: 300;
+  border-radius: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.2); }
+  button:hover,
+  a.btn:hover,
+  input[type=button]:hover {
+    background-color: #0372e5;
+    color: rgba(255, 255, 255, 0.5); }
+
+a.btn {
+  display: flex;
+  align-items: center;
+  text-decoration: none; }
 
 body {
   height: 100%;
@@ -51,7 +76,7 @@ main {
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 9;
   align-items: stretch; }
   .content section {
     flex: 1; }
@@ -67,6 +92,23 @@ main {
     background-color: #fff;
     font-size: 15px;
     line-height: 2; }
+  .content .control {
+    width: 100%;
+    background: #0259b3;
+    display: flex;
+    justify-content: flex-end; }
+    .content .control button {
+      background: none;
+      padding: 0; }
+    .content .control img {
+      box-shadow: none;
+      width: 40px;
+      height: 40px;
+      opacity: .2;
+      padding: 8px; }
+      .content .control img:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+        opacity: 1; }
   .content .img,
   .content .text {
     transform: scale(0);
@@ -157,6 +199,8 @@ label.setting-switch {
     width: 30px;
     height: 30px;
     display: block; }
+  label.setting-switch:hover {
+    opacity: .4; }
 
 .setting-cover {
   position: fixed;
@@ -165,22 +209,27 @@ label.setting-switch {
   width: 100%;
   height: 100%;
   transition: .2s transform ease-in-out;
-  padding: 60px; }
+  padding: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start; }
   .setting-cover .setting {
     background: #014081;
     width: 100%;
-    height: 100%;
     padding: 20px;
+    border-radius: 5px;
     color: #eee;
-    font-weight: 300;
-    justify-content: flex-end; }
+    font-weight: 300; }
   .setting-cover label {
-    align-self: center;
     color: #1f8cfc;
-    padding-right: 10px; }
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px; }
   .setting-cover .cover {
     display: flex;
-    align-items: stretch; }
+    align-items: stretch;
+    margin-bottom: 10px; }
+    .setting-cover .cover:last-child {
+      margin-bottom: 0; }
   .setting-cover input {
     border: none;
     padding: 10px 10px;
@@ -188,28 +237,13 @@ label.setting-switch {
     background-color: rgba(0, 0, 0, 0.2);
     outline: none;
     color: #1f8cfc;
-    border-radius: 5px 0 0 5px;
-    flex: 1; }
-  .setting-cover button {
-    border: 0;
-    background: #1f8cfc;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 16px;
-    padding: 0 10px;
-    outline: none;
-    font-weight: 300;
     border-radius: 0;
-    border-right: 1px solid rgba(0, 0, 0, 0.2); }
-    .setting-cover button:hover {
-      background-color: #0372e5;
-      color: rgba(255, 255, 255, 0.5); }
-  .setting-cover .cover button:last-of-type {
+    flex: 1; }
+  .setting-cover .cover :last-child {
     border-radius: 0 5px 5px 0;
     border-right: none; }
-
-button a {
-  color: inherit;
-  text-decoration: none; }
+  .setting-cover .cover :first-child {
+    border-radius: 5px 0 0 5px; }
 
 .alert {
   position: fixed;
@@ -221,7 +255,8 @@ button a {
   top: 0;
   transform: translate(-50%, -100%);
   transition: .2s transform ease-in-out;
-  border-radius: 0 0 5px 5px; }
+  border-radius: 0 0 5px 5px;
+  z-index: 99999; }
   .alert.show {
     transform: translate(-50%, 0); }
 

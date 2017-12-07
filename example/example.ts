@@ -4,6 +4,22 @@ import Vue from 'vue';
 
 import './style.scss';
 
+declare function Clipboard (string): void;
+
+function loadScript (url, cb?) {
+    const head = document.querySelector('head');
+    const script = document.createElement('script');
+    script.src = url;
+    if (cb) {
+        script.onload = cb;
+    }
+    head.appendChild(script);
+}
+const scripts = {
+    'copy': 'https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js'
+}
+const body = document.body;
+
 const vm = new Vue({
     el: 'main',
     data: {
@@ -11,11 +27,21 @@ const vm = new Vue({
         showLoading: false,
         showAlert: false,
         alertMsg: '',
-        token: localStorage.getItem('token')
+        token: localStorage.getItem('token'),
+        imgSrc: null,
+        content: '',
+        flags: {
+            enableCopy: true
+        }
     },
     methods: {
         clickClose (e) {
+            console.log(e);
             this.showContent = false;
+        },
+        clickUpload () {
+            this.upload(this.$refs.inputField.files[0]);
+            this.$refs.inputField.value = '';
         },
         upload (file: File | string) {
             let ocr = null;
@@ -25,12 +51,12 @@ const vm = new Vue({
                 alert(e);
                 return;
             }
-            loading.classList.add('show');
+            this.showLoading = true;
             ocr.on('data', (data) => {
-                img.src = typeof file === 'string' ? file : ocr.img.src;
-                textArea.value = data.map(val => val.words).join('\n');
-                content.classList.add('show');
-                loading.classList.remove('show');
+                this.imgSrc = typeof file === 'string' ? file : ocr.img.src;
+                this.content = data.map(val => val.words).join('\n');
+                this.showContent = true;
+                this.showLoading = false;
             });
         },
         saveToken () {
@@ -47,18 +73,42 @@ const vm = new Vue({
             window.setTimeout(() => {
                 this.showAlert = false
             }, 3000);
+        },
+        scriptCB (shortcut) {
+            switch (shortcut) {
+                case 'copy': {
+                    Vue.nextTick(() => {
+                        const cp = new Clipboard('.copy');
+                        cp.on('success', e => {
+                            this.alert('Copy Successful.');    
+                            e.clearSelection();
+                        });
+                        cp.on('error',  e => {
+                            this.alert('Copy Failed, please copy by ctrl/command+c/v.');
+                        });
+                    });
+                } break;
+            }
         }
     },
     computed: {
     },
     created () {
+        Object.keys(this.flags).forEach(flag => {
+            const shortcut = flag.replace('enable', '').toLowerCase();
+            if (this.flags[flag]) {
+                loadScript(scripts[shortcut], () => {
+                    this.scriptCB(shortcut);
+                });
+            }
+        });
         document.addEventListener('paste', (e: ClipboardEvent) => {
             const url = e.clipboardData.getData('text');
             if (toType(e.clipboardData.files[0]) === 'file') {
-                upload(e.clipboardData.files[0]);
+                this.upload(e.clipboardData.files[0]);
             } else if (urlRegex.test(url)) {
                 console.log(url);
-                upload(url);
+                this.upload(url);
             }
         });
         document.addEventListener("dragover", e => {
@@ -71,60 +121,8 @@ const vm = new Vue({
         });
         document.addEventListener('drop', e => {
             e.preventDefault();
-            upload(e.dataTransfer.files[0]);
+            this.upload(e.dataTransfer.files[0]);
             body.classList.remove('dragover');
         });
     }
 });
-
-const body = document.querySelector('body');
-const setting = document.querySelector('.setting');
-const tokenEl: HTMLInputElement = document.querySelector('.token');
-const tokenBtn = document.querySelector('.token + button');
-const loading = document.querySelector('#loading');
-const content = document.querySelector('.content');
-const img = content.querySelector('img');
-const textArea = content.querySelector('textarea');
-const close = content.querySelector('.close');
-// close.addEventListener('click', e => {
-//     e.stopPropagation();
-//     content.classList.remove('show');
-// });
-// tokenBtn.addEventListener('click', e => {
-//     const tokenVal = tokenEl.value;
-//     if (!tokenEl) {
-//         alert('Token cannot be empty.');
-//         return;
-//     }
-//     localStorage.setItem('token', tokenVal);
-//     alert('Token saved.');
-// });
-
-// const token = localStorage.getItem('token');
-// if (token) {
-//     tokenEl.value = token;
-// }
-
-const input: HTMLInputElement = document.querySelector('.inputField');
-input.addEventListener('change', e => {
-    upload((e.target as any).files[0]);
-    input.value = '';
-});
-
-
-function upload (file: File | string) {
-    let ocr = null;
-    try {
-        ocr = new JsOCR(file);
-    } catch (e) {
-        alert(e);
-        return;
-    }
-    loading.classList.add('show');
-    ocr.on('data', (data) => {
-        img.src = typeof file === 'string' ? file : ocr.img.src;
-        textArea.value = data.map(val => val.words).join('\n');
-        content.classList.add('show');
-        loading.classList.remove('show');
-    });
-}
