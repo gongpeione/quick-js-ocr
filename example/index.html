@@ -20,22 +20,35 @@
 
     <main>
         <input type="file" accept="image/*" class="inputField">
-        <div class="content">
+        <div class="content" :class="{'show': showContent}">
             <section class="img">
                 <img src="" alt="">
             </section>
             <section class="text">
                 <textarea></textarea>
             </section>
-            <div class="close">×</div>
+            <div class="close" @click.stop="clickClose">×</div>
         </div>
-        <div class="setting">
-            <section class="cover">
-                <input type="text" name="token" class="token" placeholder="Your Token"><button>Save</button>
-            </section>
-        </div>
+
+        <input type="checkbox" id="setting-switch">
+        <label for="setting-switch" class="setting-switch"><img src="setting.svg" alt="Setting"></label>
+        <section class="setting-cover">
+            <div class="setting">
+                <section class="cover">
+                    <label for="token">Token</label>
+                    <input type="text" id="token" class="token" :value="token" placeholder="Your Token">
+                    <button @click="saveToken">Save</button>
+                    <button>
+                        <a href="http://ai.baidu.com/docs#/Auth/top" target="_blank">Get-one</a>
+                    </button>
+                </section>
+            </div>
+        </section>
+
+        <div id="loading" :class="{'show': showLoading}"></div>
+        <div class="alert" :class="{'show': showAlert}">{{ alertMsg }}</div>
     </main>
-    <div id="loading"></div>
+    
 
     <script>
         if (!'Promise' in window) {
@@ -45,6 +58,7 @@
             document.write('<script src="https:\/\/cdn.bootcss.com\/fetch\/2.0.3\/fetch.min.js"><\/script>');
         }
     </script>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
     <script src="./example.js"></script>
         
 </body>

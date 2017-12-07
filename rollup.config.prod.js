@@ -7,7 +7,10 @@ export default {
     output: {
         name: 'JsOCR',
         file: './example/example.js',
-        format: 'umd'
+        format: 'umd',
+        globals: {
+            vue: 'Vue'
+        }
     },
     plugins: [
         sass({ output: 'example/example.css' }),

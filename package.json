@@ -10,5 +10,8 @@
     "rollup-plugin-typescript2": "^0.8.4",
     "rollup-plugin-uglify": "^2.0.1",
     "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "vue": "^2.5.9"
   }
 }

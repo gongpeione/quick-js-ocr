@@ -17,11 +17,16 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  overflow: hidden; }
+
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   background-color: #0259b3; }
-  body.dragover::before {
+  main.dragover::before {
     color: rgba(255, 255, 255, 0.5); }
-  body::before {
+  main::before {
     content: 'Paste/Click/Drag image or url';
     color: rgba(255, 255, 255, 0.2);
     font-weight: 900;
@@ -31,11 +36,6 @@ body {
     width: 100%;
     text-align: center;
     transform: translateY(-50%); }
-
-main {
-  height: 100%;
-  display: flex;
-  flex-direction: column; }
 
 .inputField {
   width: 100%;
@@ -126,7 +126,7 @@ main {
       display: block; }
 
 @media screen and (max-width: 414px) {
-  body::before {
+  main::before {
     content: 'Click Here';
     font-size: 30px; }
   .content .img {
@@ -134,37 +134,96 @@ main {
   .content textarea {
     background: #fff; } }
 
-.setting {
-  background: rgba(0, 0, 0, 0.2);
+#setting-switch {
+  display: none; }
+
+#setting-switch:checked + label {
+  transform: rotate(180deg) scale(1.2); }
+  #setting-switch:checked + label + .setting-cover {
+    transform: translateX(-100%); }
+    #setting-switch:checked + label + .setting-cover + label {
+      transform: translateX(0); }
+
+label.setting-switch {
+  display: inline-block;
+  opacity: .2;
+  transition: .2s transform ease-in-out;
+  padding: 10px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 3; }
+  label.setting-switch img {
+    width: 30px;
+    height: 30px;
+    display: block; }
+
+.setting-cover {
+  position: fixed;
+  left: 100%;
+  top: 0;
   width: 100%;
-  padding: 10px 20px;
-  color: #eee;
-  font-weight: 300;
-  display: flex;
-  justify-content: flex-end; }
-  .setting .cover {
+  height: 100%;
+  transition: .2s transform ease-in-out;
+  padding: 60px; }
+  .setting-cover .setting {
+    background: #014081;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    color: #eee;
+    font-weight: 300;
+    justify-content: flex-end; }
+  .setting-cover label {
+    align-self: center;
+    color: #1f8cfc;
+    padding-right: 10px; }
+  .setting-cover .cover {
     display: flex;
     align-items: stretch; }
-  .setting input {
+  .setting-cover input {
     border: none;
     padding: 10px 10px;
     font-size: 12px;
     background-color: rgba(0, 0, 0, 0.2);
     outline: none;
     color: #1f8cfc;
-    border-radius: 5px 0 0 5px; }
-  .setting button {
+    border-radius: 5px 0 0 5px;
+    flex: 1; }
+  .setting-cover button {
     border: 0;
     background: #1f8cfc;
     color: rgba(255, 255, 255, 0.8);
-    border-radius: 0 5px 5px 0;
     font-size: 16px;
     padding: 0 10px;
     outline: none;
-    font-weight: 300; }
-    .setting button:hover {
+    font-weight: 300;
+    border-radius: 0;
+    border-right: 1px solid rgba(0, 0, 0, 0.2); }
+    .setting-cover button:hover {
       background-color: #0372e5;
       color: rgba(255, 255, 255, 0.5); }
+  .setting-cover .cover button:last-of-type {
+    border-radius: 0 5px 5px 0;
+    border-right: none; }
+
+button a {
+  color: inherit;
+  text-decoration: none; }
+
+.alert {
+  position: fixed;
+  max-width: 100%;
+  background: #1ec577;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 5px 20px;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -100%);
+  transition: .2s transform ease-in-out;
+  border-radius: 0 0 5px 5px; }
+  .alert.show {
+    transform: translate(-50%, 0); }
 
 #loading {
   position: fixed;
