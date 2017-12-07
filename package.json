@@ -8,6 +8,7 @@
   "devDependencies": {
     "rollup-plugin-sass": "^0.5.3",
     "rollup-plugin-typescript2": "^0.8.4",
+    "rollup-plugin-uglify": "^2.0.1",
     "typescript": "^2.6.2"
   }
 }
