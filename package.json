@@ -6,6 +6,10 @@
   "author": "Geeku <ggongpei@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "autoprefixer": "^7.2.2",
+    "cssnano": "^3.10.0",
+    "postcss": "^6.0.14",
+    "rollup-plugin-postcss": "^0.5.5",
     "rollup-plugin-sass": "^0.5.3",
     "rollup-plugin-typescript2": "^0.8.4",
     "rollup-plugin-uglify": "^2.0.1",
