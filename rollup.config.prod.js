@@ -18,9 +18,11 @@ export default {
     plugins: [
         sass({
             output: 'example/example.css',
-            processor: css => postcss([autoprefixer, cssnano])
-                .process(css)
-                .then(result => result.css)
+            processor: css => {
+                return postcss([autoprefixer, cssnano])
+                        .process(css)
+                        .then(result => result.css)
+            }
         }),
         typescript(),
         uglify()
