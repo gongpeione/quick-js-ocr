@@ -30,7 +30,6 @@ input[type=button] {
     outline: none;
     font-weight: 300;
     border-radius: 0;
-    border-right: 1px solid rgba($color: #000, $alpha: .2);
     &:hover {
         background-color: lighten($color: $main-color, $amount: 10);
         color: rgba($color: #fff, $alpha: .5);
@@ -275,8 +274,18 @@ label.setting-switch {
         display: flex;
         align-items: stretch;
         margin-bottom: 10px;
+        border-radius: 5px; 
+        overflow: hidden;
         &:last-child {
             margin-bottom: 0;
+        }
+        & > label,
+        & > button,
+        & > .btn {
+            border-right: 1px solid rgba($color: #000, $alpha: .1);
+        }
+        & > *:last-child {
+            border-right: none;
         }
     }
     input {
@@ -288,18 +297,6 @@ label.setting-switch {
         color: lighten($color: $main-color, $amount: 20);
         border-radius: 0;
         flex: 1;
-        // &:focus {
-        //     &::-webkit-input-placeholder {
-        //         transform: translateY(-100%);
-        //     }
-        // }
-    }
-    .cover :last-child {
-        border-radius: 0 5px 5px 0;
-        border-right: none;
-    }
-    .cover :first-child {
-        border-radius: 5px 0 0 5px;
     }
 }
 @media screen and (max-width: 414px) {
