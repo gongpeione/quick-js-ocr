@@ -272,7 +272,7 @@ label.setting-switch {
     
     .cover {
         display: flex;
-        align-items: stretch;
+        align-items: center;
         margin-bottom: 10px;
         border-radius: 5px; 
         overflow: hidden;
@@ -288,7 +288,12 @@ label.setting-switch {
             border-right: none;
         }
     }
-    input {
+    input[type=button],
+    button,
+    .btn {
+        align-self: stretch;
+    }
+    input[type=text] {
         border: none;
         padding: 10px 10px;
         font-size: 12px;
@@ -297,6 +302,16 @@ label.setting-switch {
         color: lighten($color: $main-color, $amount: 20);
         border-radius: 0;
         flex: 1;
+        align-self: stretch;
+    }
+    input[type=radio] {
+        -webkit-appearance: radio;
+        opacity: .5;
+        outline: none;
+    }
+    span {
+        color: lighten($color: $main-color, $amount: 20);
+        margin: 0 10px;
     }
 }
 @media screen and (max-width: 414px) {

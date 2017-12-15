@@ -1,8 +1,5 @@
-import JsOCR from '../src/jsocr';
-import { toType, urlRegex } from '../src/jsocr';
-import Vue from 'vue';
-
-import './style.scss';
+import JsOCR, { toType, urlRegex }  from '../src/jsocr';
+import Vue from 'vue/dist/vue.esm.browser';
 
 declare function Clipboard (string): void;
 
@@ -29,9 +26,16 @@ const vm = new Vue({
         alertMsg: '',
         token: localStorage.getItem('token'),
         imgSrc: null,
+        source: 'b',
         content: '',
+        ocr: null,
         flags: {
             enableCopy: true
+        }
+    },
+    watch: {
+        source (val, oldVal) {
+            this.ocr && (this.ocr.source = val);
         }
     },
     methods: {
@@ -44,16 +48,16 @@ const vm = new Vue({
             this.$refs.inputField.value = '';
         },
         upload (file: File | string) {
-            let ocr = null;
             try {
-                ocr = new JsOCR(file);
+                this.ocr = this.ocr || new JsOCR(file);
             } catch (e) {
                 alert(e);
                 return;
             }
+            this.ocr.source = this.source;
             this.showLoading = true;
-            ocr.on('data', (data) => {
-                this.imgSrc = typeof file === 'string' ? file : ocr.img.src;
+            this.ocr.on('data', (data) => {
+                this.imgSrc = typeof file === 'string' ? file : this.ocr.img.src;
                 this.content = data.map(val => val.words).join('\n');
                 this.showContent = true;
                 this.showLoading = false;

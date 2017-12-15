@@ -3,7 +3,7 @@ interface HTMLInputEvent extends Event {
 }
 
 const url = {
-    ocr: 'https://api.geeku.net/ocr'
+    ocr: 'https://geeku.net/ocr'
 }
 const paraments = {
     image: '',
@@ -49,6 +49,7 @@ export default class JsOCR {
     config = null
     token = ''
     eventListeners = {}
+    source = 'b' // baidu
     constructor (content: HTMLInputElement | HTMLInputEvent | File | string) {
 
         if (!((this as any) instanceof JsOCR)) {
@@ -61,9 +62,7 @@ export default class JsOCR {
         this.config = Object.assign(paraments);
         // Generate your own token: https://cloud.baidu.com/product/ocr.html
         const tokenFromLocal = localStorage.getItem('token');
-        this.token = tokenFromLocal ? 
-                        tokenFromLocal : 
-                        '24.2f0d9a3b6a60817dfd94ae61ea6f7e99.2592000.1515124116.282335-10488404';
+        this.token = tokenFromLocal ? tokenFromLocal : '';
         const type = toType(content);
         
         switch (type) {
@@ -101,7 +100,9 @@ export default class JsOCR {
         //             this._file = true;
         //         });
         // }
-        const req = fetch(url.ocr + `?access_token=${this.token}`, { method: 'POST', headers, body })
+        const distUrl = url.ocr + `?${this.token && 'access_token=' + this.token}&s=${this.source}`;
+
+        const req = fetch(distUrl, { method: 'POST', headers, body })
                 .then(res => res.json())
                 .then(data => {
                     if (data.error_code) {

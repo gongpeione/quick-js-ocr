@@ -6,19 +6,19 @@
 
     <title>JsOCR</title>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp">
     
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <meta name="theme-color" content="#363d4c">
 
     <link href="https://cdn.bootcss.com/normalize/7.0.0/normalize.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./style.scss">
+    <link rel="stylesheet" href="/dist/432acdaf1274ad437960c7d335f9c88f.css">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111105357-1"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-111105357-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -40,7 +40,7 @@
             <section class="text">
                 <div class="control">
                     <button class="copy" v-if="flags.enableCopy" data-clipboard-target="#copy-target">
-                        <img src="img/copy.svg" alt="copy" title="Copy">
+                        <img src="/dist/a33ea50432665294c34c80164c5bdfaa.svg" alt="copy" title="Copy">
                     </button>
                 </div>
                 <textarea id="copy-target">{{ content }}</textarea>
@@ -49,7 +49,7 @@
         </div>
 
         <input type="checkbox" id="setting-switch">
-        <label for="setting-switch" class="setting-switch"><img src="img/setting.svg" alt="Setting"></label>
+        <label for="setting-switch" class="setting-switch"><img src="/dist/3afdca7a0b16fa79c2fc2fc860f5cf18.svg" alt="Setting"></label>
         <section class="setting-cover">
             <div class="setting">
                 <section class="cover">
@@ -60,7 +60,7 @@
                 </section>
                 <section class="cover">
                     <label for="source">Source</label>
-                    <label for="b">Baidu: <input id="b" type="radio" name="source" value="b" v-model="source" checked></label>
+                    <label for="b">Baidu: <input id="b" type="radio" name="source" value="b" v-model="source" checked=""></label>
                     <label for="g">Google: <input id="g" type="radio" name="source" value="g" v-model="source"></label>
                 </section>{{ this.ocr }}
                 <!-- <section class="cover">
@@ -83,7 +83,7 @@
             document.write('<script src="https:\/\/cdn.bootcss.com\/fetch\/2.0.3\/fetch.min.js"><\/script>');
         }
     </script>
-    <script src="./example.ts"></script>
+    <script src="/dist/ca435cca04ddbc76fe98de77d250e008.js"></script>
     
 </body>
 </html>
